@@ -5,14 +5,14 @@
 Network Working Group                                       M. Koldychev
 Internet-Draft                                              S. Sivabalan
 Intended status: Standards Track                     Cisco Systems, Inc.
-Expires: August 12, 2020                                         T. Saad
+Expires: August 13, 2020                                         T. Saad
                                                                V. Beeram
                                                   Juniper Networks, Inc.
                                                               H. Bidgoli
                                                                    Nokia
                                                                 B. Yadav
                                                                    Ciena
-                                                       February 09, 2020
+                                                       February 10, 2020
 
 
           PCEP Extensions for Signaling Multipath Information
@@ -46,14 +46,14 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on August 12, 2020.
+   This Internet-Draft will expire on August 13, 2020.
 
 
 
 
 
 
-Koldychev, et al.        Expires August 12, 2020                [Page 1]
+Koldychev, et al.        Expires August 13, 2020                [Page 1]
 
 Internet-Draft        PCEP Extensions for Multipath        February 2020
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Koldychev, et al.        Expires August 12, 2020                [Page 2]
+Koldychev, et al.        Expires August 13, 2020                [Page 2]
 
 Internet-Draft        PCEP Extensions for Multipath        February 2020
 
@@ -165,7 +165,7 @@ Internet-Draft        PCEP Extensions for Multipath        February 2020
 
 
 
-Koldychev, et al.        Expires August 12, 2020                [Page 3]
+Koldychev, et al.        Expires August 13, 2020                [Page 3]
 
 Internet-Draft        PCEP Extensions for Multipath        February 2020
 
@@ -221,7 +221,7 @@ Internet-Draft        PCEP Extensions for Multipath        February 2020
 
 
 
-Koldychev, et al.        Expires August 12, 2020                [Page 4]
+Koldychev, et al.        Expires August 13, 2020                [Page 4]
 
 Internet-Draft        PCEP Extensions for Multipath        February 2020
 
@@ -277,7 +277,7 @@ Internet-Draft        PCEP Extensions for Multipath        February 2020
 
 
 
-Koldychev, et al.        Expires August 12, 2020                [Page 5]
+Koldychev, et al.        Expires August 13, 2020                [Page 5]
 
 Internet-Draft        PCEP Extensions for Multipath        February 2020
 
@@ -333,7 +333,7 @@ Internet-Draft        PCEP Extensions for Multipath        February 2020
 
 
 
-Koldychev, et al.        Expires August 12, 2020                [Page 6]
+Koldychev, et al.        Expires August 13, 2020                [Page 6]
 
 Internet-Draft        PCEP Extensions for Multipath        February 2020
 
@@ -351,6 +351,8 @@ Internet-Draft        PCEP Extensions for Multipath        February 2020
       0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
      |             Type              |             Length            |
+     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+     |                            Flags                              |
      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
      |                         Backup Path ID 1                      |
      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -387,9 +389,7 @@ Internet-Draft        PCEP Extensions for Multipath        February 2020
 
 
 
-
-
-Koldychev, et al.        Expires August 12, 2020                [Page 7]
+Koldychev, et al.        Expires August 13, 2020                [Page 7]
 
 Internet-Draft        PCEP Extensions for Multipath        February 2020
 
@@ -434,7 +434,7 @@ Internet-Draft        PCEP Extensions for Multipath        February 2020
    2.  The MULTIPATH-WEIGHT TLV MAY be carried inside the PATH-ATTRIB
        object.  A weight is populated to reflect the relative loadshare
        that is to be carried by the path.  If the MULTIPATH-WEIGHT is
-       not carried inside a PATH-ATTRIB objecct, the default weigh 1
+       not carried inside a PATH-ATTRIB object, the default weight 1
        MUST be assumed when computing the loadshare.
 
    3.  The fraction of flows carried by a specific primary path is
@@ -445,7 +445,7 @@ Internet-Draft        PCEP Extensions for Multipath        February 2020
 
 
 
-Koldychev, et al.        Expires August 12, 2020                [Page 8]
+Koldychev, et al.        Expires August 13, 2020                [Page 8]
 
 Internet-Draft        PCEP Extensions for Multipath        February 2020
 
@@ -501,7 +501,7 @@ Internet-Draft        PCEP Extensions for Multipath        February 2020
 
 
 
-Koldychev, et al.        Expires August 12, 2020                [Page 9]
+Koldychev, et al.        Expires August 13, 2020                [Page 9]
 
 Internet-Draft        PCEP Extensions for Multipath        February 2020
 
@@ -557,7 +557,7 @@ Internet-Draft        PCEP Extensions for Multipath        February 2020
 
 
 
-Koldychev, et al.        Expires August 12, 2020               [Page 10]
+Koldychev, et al.        Expires August 13, 2020               [Page 10]
 
 Internet-Draft        PCEP Extensions for Multipath        February 2020
 
@@ -613,7 +613,7 @@ Authors' Addresses
 
 
 
-Koldychev, et al.        Expires August 12, 2020               [Page 11]
+Koldychev, et al.        Expires August 13, 2020               [Page 11]
 
 Internet-Draft        PCEP Extensions for Multipath        February 2020
 
@@ -669,4 +669,4 @@ Internet-Draft        PCEP Extensions for Multipath        February 2020
 
 
 
-Koldychev, et al.        Expires August 12, 2020               [Page 12]
+Koldychev, et al.        Expires August 13, 2020               [Page 12]
