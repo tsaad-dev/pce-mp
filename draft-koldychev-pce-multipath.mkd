@@ -257,7 +257,7 @@ preceded by an PATH-ATTRIB object that describes it.
   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
   |             Type              |             Length            |
   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-  |                            Flags                              |
+  |       Backup Path Number      |             Flags             |
   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
   |                         Backup Path ID 1                      |
   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -275,12 +275,14 @@ preceded by an PATH-ATTRIB object that describes it.
 
    Length: variable - multiple of 4-octets
 
+   Backup Path Number: Number of backup path(s).
+
    Flags:
 
 ~~~
-    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-    |B|          Reserved                                           |
-    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+    |B|          Reserved           |
+    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 ~~~
 
 > B: If set, indicates a pure backup path. This is a path that only
@@ -352,8 +354,8 @@ follows:
    2. The MULTIPATH-BACKUP TLV MUST be added inside the PATH-ATTRIB object for each
       ERO or SERO that is protected. The backup path ID(s) are populated in the
       MULTIPATH-BACKUP TLV to reflect the set of backup path(s) protecting the
-      primary path. The Length field in the MULTIPATH-BACKUP is updated
-      according to the number of backup path ID(s) included.
+      primary path. The Length field and Backup Path Number in the MULTIPATH-BACKUP
+      are updated according to the number of backup path ID(s) included.
 
    3. The MULTIPATH-BACKUP TLV MAY be added inside the PATH-ATTRIB object for each
       ERO or SERO that is unprotected. In this case, MULTIPATH-BACKUP does not carry

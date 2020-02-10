@@ -352,7 +352,7 @@ Internet-Draft        PCEP Extensions for Multipath        February 2020
      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
      |             Type              |             Length            |
      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-     |                            Flags                              |
+     |       Backup Path Number      |             Flags             |
      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
      |                         Backup Path ID 1                      |
      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -370,11 +370,13 @@ Internet-Draft        PCEP Extensions for Multipath        February 2020
 
    Length: variable - multiple of 4-octets
 
+   Backup Path Number: Number of backup path(s).
+
    Flags:
 
-       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-       |B|          Reserved                                           |
-       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+       |B|          Reserved           |
+       +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
       B: If set, indicates a pure backup path.  This is a path that only
       carries rerouted traffic after the protected path fails.  If this
@@ -384,8 +386,6 @@ Internet-Draft        PCEP Extensions for Multipath        February 2020
 
    Backup Path ID(s): a series of 4-octet identifier(s) that identify
    the backup path(s) in the set that protect this primary path.
-
-
 
 
 
@@ -464,8 +464,8 @@ Internet-Draft        PCEP Extensions for Multipath        February 2020
        object for each ERO or SERO that is protected.  The backup path
        ID(s) are populated in the MULTIPATH-BACKUP TLV to reflect the
        set of backup path(s) protecting the primary path.  The Length
-       field in the MULTIPATH-BACKUP is updated according to the number
-       of backup path ID(s) included.
+       field and Backup Path Number in the MULTIPATH-BACKUP are updated
+       according to the number of backup path ID(s) included.
 
    3.  The MULTIPATH-BACKUP TLV MAY be added inside the PATH-ATTRIB
        object for each ERO or SERO that is unprotected.  In this case,
