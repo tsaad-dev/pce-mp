@@ -331,7 +331,7 @@ PATH-ATTRIB is populated for each ERO or SERO as follows:
    2. The MULTIPATH-WEIGHT TLV MAY be carried inside the PATH-ATTRIB object. A
       weight is populated to reflect the relative loadshare that is to be
       carried by the path. If the MULTIPATH-WEIGHT is not carried inside a
-      PATH-ATTRIB objecct, the default weigh 1 MUST be assumed when computing
+      PATH-ATTRIB object, the default weigh 1 MUST be assumed when computing
       the loadshare.
 
    3. The fraction of flows carried by a specific primary path is derived
