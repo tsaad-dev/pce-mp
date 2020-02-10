@@ -89,7 +89,7 @@ Table of Contents
      4.4.  Multipath Backup TLV  . . . . . . . . . . . . . . . . . .   7
    5.  Operation . . . . . . . . . . . . . . . . . . . . . . . . . .   8
      5.1.  Signaling Multiple Paths for Loadbalancing  . . . . . . .   8
-     5.2.  Signaling Multiple Paths for Protection . . . . . . . . .   8
+     5.2.  Signaling Multiple Paths for Protection . . . . . . . . .   9
    6.  PCEP Message Extensions . . . . . . . . . . . . . . . . . . .   9
    7.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   9
    8.  Security Considerations . . . . . . . . . . . . . . . . . . .  10
@@ -433,15 +433,15 @@ Internet-Draft        PCEP Extensions for Multipath        February 2020
 
    2.  The MULTIPATH-WEIGHT TLV MAY be carried inside the PATH-ATTRIB
        object.  A weight is populated to reflect the relative loadshare
-       that is to be carried by the LSP.  If the MULTIPATH-WEIGHT is not
-       carried inside a PATH-ATTRIB objecct, the default weigh 1 MUST be
-       assumed when computing the loadshare.
+       that is to be carried by the path.  If the MULTIPATH-WEIGHT is
+       not carried inside a PATH-ATTRIB objecct, the default weigh 1
+       MUST be assumed when computing the loadshare.
 
-5.2.  Signaling Multiple Paths for Protection
+   3.  The fraction of flows carried by a specific primary path is
+       derived from the ratio of its weight to the sum of all other
+       multipath weights.
 
-   The PATH-ATTRIB object can be used to describe a set of backup
-   path(s) protecting a primary path.  In this case, the PATH-ATTRIB is
-   populated for each ERO or SERO as follows:
+
 
 
 
@@ -450,16 +450,29 @@ Koldychev, et al.        Expires August 12, 2020                [Page 8]
 Internet-Draft        PCEP Extensions for Multipath        February 2020
 
 
+5.2.  Signaling Multiple Paths for Protection
+
+   The PATH-ATTRIB object can be used to describe a set of backup
+   path(s) protecting a primary path.  In this case, the PATH-ATTRIB is
+   populated for each ERO or SERO as follows:
+
    1.  The PCE assigns a unique Path ID to each ERO or SERO path and
        populates it inside the PATH-ATTRIB object.  The Path ID is
        unique within the context of a PLSP or PCEP Tunnel.
 
-   2.  The MULTIPATH-BACKUP TLV is added inside the PATH-ATTRIB object
-       for each ERO or SERO that is protected.  The backup path ID(s)
-       are populated in the MULTIPATH-BACKUP TLV to reflect the set of
-       backup path(s) protecting the primary path.  The Length field in
-       the MULTIPATH-BACKUP is updated according to the number of backup
-       path ID(s).
+   2.  The MULTIPATH-BACKUP TLV MUST be added inside the PATH-ATTRIB
+       object for each ERO or SERO that is protected.  The backup path
+       ID(s) are populated in the MULTIPATH-BACKUP TLV to reflect the
+       set of backup path(s) protecting the primary path.  The Length
+       field in the MULTIPATH-BACKUP is updated according to the number
+       of backup path ID(s) included.
+
+   3.  The MULTIPATH-BACKUP TLV MAY be added inside the PATH-ATTRIB
+       object for each ERO or SERO that is unprotected.  In this case,
+       MULTIPATH-BACKUP does not carry any backup path IDs in the TLV.
+       If the path acts as a pure backup - i.e.  the path only carries
+       rerouted traffic after the protected path(s) fail- then the B
+       flag MUST be set.
 
 6.  PCEP Message Extensions
 
@@ -485,6 +498,14 @@ Internet-Draft        PCEP Extensions for Multipath        February 2020
    IANA is requested to make the assignment of a new value for the
    existing "PCEP TLV Type Indicators" registry as follows:
 
+
+
+
+Koldychev, et al.        Expires August 12, 2020                [Page 9]
+
+Internet-Draft        PCEP Extensions for Multipath        February 2020
+
+
     +------------+-----------------------------------+-----------------+
     | TLV Type   | TLV Name                          | Reference       |
     | Value      |                                   |                 |
@@ -495,16 +516,6 @@ Internet-Draft        PCEP Extensions for Multipath        February 2020
     +------------+-----------------------------------+-----------------+
     | TBD3       | MULTIPATH-BACKUP                  | This document   |
     +------------+-----------------------------------+-----------------+
-
-
-
-
-
-
-Koldychev, et al.        Expires August 12, 2020                [Page 9]
-
-Internet-Draft        PCEP Extensions for Multipath        February 2020
-
 
 8.  Security Considerations
 
@@ -542,6 +553,15 @@ Internet-Draft        PCEP Extensions for Multipath        February 2020
               koldychev-pce-operational-00 (work in progress), July
               2019.
 
+
+
+
+
+Koldychev, et al.        Expires August 12, 2020               [Page 10]
+
+Internet-Draft        PCEP Extensions for Multipath        February 2020
+
+
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
               DOI 10.17487/RFC2119, March 1997,
@@ -551,16 +571,6 @@ Internet-Draft        PCEP Extensions for Multipath        February 2020
               Element (PCE) Communication Protocol (PCEP)", RFC 5440,
               DOI 10.17487/RFC5440, March 2009,
               <https://www.rfc-editor.org/info/rfc5440>.
-
-
-
-
-
-
-Koldychev, et al.        Expires August 12, 2020               [Page 10]
-
-Internet-Draft        PCEP Extensions for Multipath        February 2020
-
 
    [RFC8231]  Crabbe, E., Minei, I., Medved, J., and R. Varga, "Path
               Computation Element Communication Protocol (PCEP)
@@ -601,21 +611,17 @@ Authors' Addresses
    Email: tsaad@juniper.net
 
 
-   Vishnu Pavan Beeram
-   Juniper Networks, Inc.
-
-   Email: vbeeram@juniper.net
-
-
-
-
-
-
 
 
 Koldychev, et al.        Expires August 12, 2020               [Page 11]
 
 Internet-Draft        PCEP Extensions for Multipath        February 2020
+
+
+   Vishnu Pavan Beeram
+   Juniper Networks, Inc.
+
+   Email: vbeeram@juniper.net
 
 
    Hooman Bidgoli
@@ -628,12 +634,6 @@ Internet-Draft        PCEP Extensions for Multipath        February 2020
    Ciena
 
    Email: byadav@ciena.com
-
-
-
-
-
-
 
 
 
