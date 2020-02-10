@@ -5,18 +5,18 @@
 Network Working Group                                       M. Koldychev
 Internet-Draft                                              S. Sivabalan
 Intended status: Standards Track                     Cisco Systems, Inc.
-Expires: August 9, 2020                                          T. Saad
+Expires: August 12, 2020                                         T. Saad
                                                                V. Beeram
                                                   Juniper Networks, Inc.
                                                               H. Bidgoli
                                                                    Nokia
                                                                 B. Yadav
                                                                    Ciena
-                                                       February 06, 2020
+                                                       February 09, 2020
 
 
           PCEP Extensions for Signaling Multipath Information
-                    draft-koldychev-pce-multipath-00
+                    draft-koldychev-pce-multipath-01
 
 Abstract
 
@@ -46,14 +46,14 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on August 9, 2020.
+   This Internet-Draft will expire on August 12, 2020.
 
 
 
 
 
 
-Koldychev, et al.        Expires August 9, 2020                 [Page 1]
+Koldychev, et al.        Expires August 12, 2020                [Page 1]
 
 Internet-Draft        PCEP Extensions for Multipath        February 2020
 
@@ -78,7 +78,7 @@ Table of Contents
    1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   2
    2.  Terminology . . . . . . . . . . . . . . . . . . . . . . . . .   3
      2.1.  Terms and Abbreviations . . . . . . . . . . . . . . . . .   3
-   3.  Motivation  . . . . . . . . . . . . . . . . . . . . . . . . .   3
+   3.  Motivation  . . . . . . . . . . . . . . . . . . . . . . . . .   4
      3.1.  Signaling Multiple Segment-Lists of an SR Candidate-Path    4
      3.2.  Splitting of Requested Bandwidth  . . . . . . . . . . . .   4
      3.3.  Providing Backup path for Protection  . . . . . . . . . .   4
@@ -86,16 +86,18 @@ Table of Contents
      4.1.  Multipath Capability TLV  . . . . . . . . . . . . . . . .   4
      4.2.  Path Attributes Object  . . . . . . . . . . . . . . . . .   5
      4.3.  Multipath Weight TLV  . . . . . . . . . . . . . . . . . .   6
-     4.4.  Multipath Backup TLV  . . . . . . . . . . . . . . . . . .   6
-   5.  Operation . . . . . . . . . . . . . . . . . . . . . . . . . .   7
-   6.  PCEP Message Extensions . . . . . . . . . . . . . . . . . . .   8
-   7.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   8
-   8.  Security Considerations . . . . . . . . . . . . . . . . . . .   8
-   9.  Acknowledgement . . . . . . . . . . . . . . . . . . . . . . .   8
-   10. References  . . . . . . . . . . . . . . . . . . . . . . . . .   8
-     10.1.  Normative References . . . . . . . . . . . . . . . . . .   9
-     10.2.  Informative References . . . . . . . . . . . . . . . . .  10
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  10
+     4.4.  Multipath Backup TLV  . . . . . . . . . . . . . . . . . .   7
+   5.  Operation . . . . . . . . . . . . . . . . . . . . . . . . . .   8
+     5.1.  Signaling Multiple Paths for Loadbalancing  . . . . . . .   8
+     5.2.  Signaling Multiple Paths for Protection . . . . . . . . .   8
+   6.  PCEP Message Extensions . . . . . . . . . . . . . . . . . . .   9
+   7.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   9
+   8.  Security Considerations . . . . . . . . . . . . . . . . . . .  10
+   9.  Acknowledgement . . . . . . . . . . . . . . . . . . . . . . .  10
+   10. References  . . . . . . . . . . . . . . . . . . . . . . . . .  10
+     10.1.  Normative References . . . . . . . . . . . . . . . . . .  10
+     10.2.  Informative References . . . . . . . . . . . . . . . . .  11
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  11
 
 1.  Introduction
 
@@ -104,27 +106,26 @@ Table of Contents
    (PCC) and a Path Control Element (PCE), or between two PCEs based on
    the PCE architecture [RFC4655].
 
-   PCEP Extensions for the Stateful PCE Model [RFC8231] describes a set
-   of extensions to PCEP to enable active control of Multiprotocol Label
 
 
 
-Koldychev, et al.        Expires August 9, 2020                 [Page 2]
+Koldychev, et al.        Expires August 12, 2020                [Page 2]
 
 Internet-Draft        PCEP Extensions for Multipath        February 2020
 
 
-   Switching Traffic Engineering (MPLS-TE) and Generalized MPLS (GMPLS)
-   tunnels.  [RFC8281] describes the setup and teardown of PCE-initiated
-
-   LSPs under the active stateful PCE model, without the need for local
-   configuration on the PCC, thus allowing for dynamic centralized
-   control of a network.
+   PCEP Extensions for the Stateful PCE Model [RFC8231] describes a set
+   of extensions to PCEP that enable active control of Multiprotocol
+   Label Switching Traffic Engineering (MPLS-TE) and Generalized MPLS
+   (GMPLS) tunnels.  [RFC8281] describes the setup and teardown of PCE-
+   initiated LSPs under the active stateful PCE model, without the need
+   for local configuration on the PCC, thus allowing for dynamic
+   centralized control of a network.
 
    PCEP Extensions for Segment Routing [I-D.ietf-pce-segment-routing]
    specifies extensions to the Path Computation Element Protocol (PCEP)
    that allow a stateful PCE to compute and initiate Traffic Engineering
-   (TE) paths, as well as a PCC to request a path subject to certain
+   (TE) paths, as well as for a PCC to request a path subject to certain
    constraint(s) and optimization criteria in SR networks.
 
    Segment Routing Policy for Traffic Engineering
@@ -136,7 +137,10 @@ Internet-Draft        PCEP Extensions for Multipath        February 2020
    support Segment Routing Policy Candidate Paths
    [I-D.barth-pce-segment-routing-policy-cp] specifically avoids
    defining how to signal multipath information, and states that this
-   will be defined in another document (this one).
+   will be defined in another document.
+
+   This document defines the required extensions that allow the
+   signaling of multipath information via PCEP.
 
 2.  Terminology
 
@@ -154,9 +158,6 @@ Internet-Draft        PCEP Extensions for Multipath        February 2020
       The object identified by the PLSP-ID, see
       [I-D.koldychev-pce-operational] for more details.
 
-3.  Motivation
-
-   This extension is motivated by the use-cases described below.
 
 
 
@@ -164,11 +165,14 @@ Internet-Draft        PCEP Extensions for Multipath        February 2020
 
 
 
-
-Koldychev, et al.        Expires August 9, 2020                 [Page 3]
+Koldychev, et al.        Expires August 12, 2020                [Page 3]
 
 Internet-Draft        PCEP Extensions for Multipath        February 2020
 
+
+3.  Motivation
+
+   This extension is motivated by the use-cases described below.
 
 3.1.  Signaling Multiple Segment-Lists of an SR Candidate-Path
 
@@ -184,11 +188,11 @@ Internet-Draft        PCEP Extensions for Multipath        February 2020
 
 3.2.  Splitting of Requested Bandwidth
 
-   A PCC may request a path with 100 Gbit of bandwidth, but all links in
-   the network have only 50 Gbit capacity.  The PCE can return two
-   paths, that can each carry 50 Gbit.  The PCC can then equally or
-   unequally split the incoming 100 Gbit of traffic among the two 50
-   Gbit paths.  Section 4.3 introduces a new TLV that carries the path
+   A PCC may request a path with 100 Gbps of bandwidth, but all links in
+   the network have only 50 Gbps capacity.  The PCE can return two
+   paths, that can each carry 50 Gbps.  The PCC can then equally or
+   unequally split the incoming 100 Gbps of traffic among the two 50
+   Gbps paths.  Section 4.3 introduces a new TLV that carries the path
    weight that allows for distribution of incoming traffic on to the
    multiple paths.
 
@@ -213,18 +217,20 @@ Internet-Draft        PCEP Extensions for Multipath        February 2020
    1.  From PCC: it tells how many multipaths the PCC can install in
        forwarding.
 
+
+
+
+
+Koldychev, et al.        Expires August 12, 2020                [Page 4]
+
+Internet-Draft        PCEP Extensions for Multipath        February 2020
+
+
    2.  From PCE: it tells that the PCE supports this standard and how
        many multipaths the PCE can compute.
 
    Only the first instance of this TLV can be processed, subsequent
    instances SHOULD be ignored.
-
-
-
-Koldychev, et al.        Expires August 9, 2020                 [Page 4]
-
-Internet-Draft        PCEP Extensions for Multipath        February 2020
-
 
       0                   1                   2                   3
       0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
@@ -258,10 +264,30 @@ Internet-Draft        PCEP Extensions for Multipath        February 2020
    ERO/RRO objects are present, then each ERO/RRO object MUST be
    preceded by an PATH-ATTRIB object that describes it.
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+Koldychev, et al.        Expires August 12, 2020                [Page 5]
+
+Internet-Draft        PCEP Extensions for Multipath        February 2020
+
+
       0                   1                   2                   3
       0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
      |                         Flags                           | Oper|
+     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+     |                         Path ID.                              |
      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
      ~                          Optional TLVs                        ~
      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -273,14 +299,8 @@ Internet-Draft        PCEP Extensions for Multipath        February 2020
    Oper: operational state of the path, same values as the identically
    named field in the LSP object.
 
-
-
-
-
-Koldychev, et al.        Expires August 9, 2020                 [Page 5]
-
-Internet-Draft        PCEP Extensions for Multipath        February 2020
-
+   Path ID: 4-octet identifier that identifies a path in the set of
+   multiple paths.
 
 4.3.  Multipath Weight TLV
 
@@ -306,6 +326,18 @@ Internet-Draft        PCEP Extensions for Multipath        February 2020
    from the ratio of its weight to the sum of all other multipath ERO/
    RRO weights.
 
+
+
+
+
+
+
+
+Koldychev, et al.        Expires August 12, 2020                [Page 6]
+
+Internet-Draft        PCEP Extensions for Multipath        February 2020
+
+
 4.4.  Multipath Backup TLV
 
    This document introduces a new MULTIPATH-BACKUP TLV that is optional
@@ -320,46 +352,47 @@ Internet-Draft        PCEP Extensions for Multipath        February 2020
      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
      |             Type              |             Length            |
      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-     |                            Flags                              |
+     |                         Backup Path ID 1                      |
      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-     |                         Path ID.                              |
+     |                         Backup Path ID 2                      |
      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-     |                         Backup Path ID                        |
+     |                              ...                              |
+     +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+     |                         Backup Path ID n                      |
      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
 
                    Figure 4: MULTIPATH-BACKUP TLV format
 
-
-
-
-Koldychev, et al.        Expires August 9, 2020                 [Page 6]
-
-Internet-Draft        PCEP Extensions for Multipath        February 2020
-
-
    Type: TBD3 for "MULTIPATH-BACKUP" TLV
 
-   Length: 12
+   Length: variable - multiple of 4-octets
 
    Flags:
 
        +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-       |P|B|F|      Reserved                                           |
+       |B|          Reserved                                           |
        +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
-      P: If set, indicates a primary path
+      B: If set, indicates a pure backup path.  This is a path that only
+      carries rerouted traffic after the protected path fails.  If this
+      flag is not set, or if the MULTIPATH-BACKUP TLV is not carried in
+      the PATH-ATTRIB object of an ERO or SERO, then the path is assumed
+      to be primary that carries normal traffic.
 
-      B: If set, indicates a backup path
+   Backup Path ID(s): a series of 4-octet identifier(s) that identify
+   the backup path(s) in the set that protect this primary path.
 
-      F: If set, indicates this primary path is also protected.  The
-      backup Path ID indicates the backup path.
 
-   Path ID: an identifier that identifies a primary path in the set of
-   paths.
 
-   Backup Path ID: an identifier that identifies the backup path in the
-   set of paths.
+
+
+
+
+Koldychev, et al.        Expires August 12, 2020                [Page 7]
+
+Internet-Draft        PCEP Extensions for Multipath        February 2020
+
 
 5.  Operation
 
@@ -387,12 +420,46 @@ Internet-Draft        PCEP Extensions for Multipath        February 2020
    assume that the PCE does not support this standard and fall back to
    reporting only a single ERO/RRO.
 
+5.1.  Signaling Multiple Paths for Loadbalancing
+
+   The PATH-ATTRIB object can be used to signal multiple path(s) and
+   indicate (un)equal loadbalancing amongst the set of multipaths.  In
+   this case, the PATH-ATTRIB is populated for each ERO or SERO as
+   follows:
+
+   1.  The PCE assigns a unique Path ID to each ERO or SERO path and
+       populates it inside the PATH-ATTRIB object.  The Path ID is
+       unique within the context of a PLSP or PCEP Tunnel.
+
+   2.  The MULTIPATH-WEIGHT TLV MAY be carried inside the PATH-ATTRIB
+       object.  A weight is populated to reflect the relative loadshare
+       that is to be carried by the LSP.  If the MULTIPATH-WEIGHT is not
+       carried inside a PATH-ATTRIB objecct, the default weigh 1 MUST be
+       assumed when computing the loadshare.
+
+5.2.  Signaling Multiple Paths for Protection
+
+   The PATH-ATTRIB object can be used to describe a set of backup
+   path(s) protecting a primary path.  In this case, the PATH-ATTRIB is
+   populated for each ERO or SERO as follows:
 
 
-Koldychev, et al.        Expires August 9, 2020                 [Page 7]
+
+Koldychev, et al.        Expires August 12, 2020                [Page 8]
 
 Internet-Draft        PCEP Extensions for Multipath        February 2020
 
+
+   1.  The PCE assigns a unique Path ID to each ERO or SERO path and
+       populates it inside the PATH-ATTRIB object.  The Path ID is
+       unique within the context of a PLSP or PCEP Tunnel.
+
+   2.  The MULTIPATH-BACKUP TLV is added inside the PATH-ATTRIB object
+       for each ERO or SERO that is protected.  The backup path ID(s)
+       are populated in the MULTIPATH-BACKUP TLV to reflect the set of
+       backup path(s) protecting the primary path.  The Length field in
+       the MULTIPATH-BACKUP is updated according to the number of backup
+       path ID(s).
 
 6.  PCEP Message Extensions
 
@@ -418,16 +485,26 @@ Internet-Draft        PCEP Extensions for Multipath        February 2020
    IANA is requested to make the assignment of a new value for the
    existing "PCEP TLV Type Indicators" registry as follows:
 
-   +------------+-----------------------------------+------------------+
-   | TLV Type   | TLV Name                          | Reference        |
-   | Value      |                                   |                  |
-   +------------+-----------------------------------+------------------+
-   | TBD1       | MULTIPATH-CAP                     | This document    |
-   +------------+-----------------------------------+------------------+
-   | TBD2       | MULTIPATH-WEIGHT                  | This document    |
-   +------------+-----------------------------------+------------------+
-   | TBD3       | MULTIPATH-BACKUP                  | This document    |
-   +------------+-----------------------------------+------------------+
+    +------------+-----------------------------------+-----------------+
+    | TLV Type   | TLV Name                          | Reference       |
+    | Value      |                                   |                 |
+    +------------+-----------------------------------+-----------------+
+    | TBD1       | MULTIPATH-CAP                     | This document   |
+    +------------+-----------------------------------+-----------------+
+    | TBD2       | MULTIPATH-WEIGHT                  | This document   |
+    +------------+-----------------------------------+-----------------+
+    | TBD3       | MULTIPATH-BACKUP                  | This document   |
+    +------------+-----------------------------------+-----------------+
+
+
+
+
+
+
+Koldychev, et al.        Expires August 12, 2020                [Page 9]
+
+Internet-Draft        PCEP Extensions for Multipath        February 2020
+
 
 8.  Security Considerations
 
@@ -438,17 +515,6 @@ Internet-Draft        PCEP Extensions for Multipath        February 2020
    Thanks to Dhruv Dhody for ideas and discussion.
 
 10.  References
-
-
-
-
-
-
-
-Koldychev, et al.        Expires August 9, 2020                 [Page 8]
-
-Internet-Draft        PCEP Extensions for Multipath        February 2020
-
 
 10.1.  Normative References
 
@@ -486,6 +552,16 @@ Internet-Draft        PCEP Extensions for Multipath        February 2020
               DOI 10.17487/RFC5440, March 2009,
               <https://www.rfc-editor.org/info/rfc5440>.
 
+
+
+
+
+
+Koldychev, et al.        Expires August 12, 2020               [Page 10]
+
+Internet-Draft        PCEP Extensions for Multipath        February 2020
+
+
    [RFC8231]  Crabbe, E., Minei, I., Medved, J., and R. Varga, "Path
               Computation Element Communication Protocol (PCEP)
               Extensions for Stateful PCE", RFC 8231,
@@ -497,14 +573,6 @@ Internet-Draft        PCEP Extensions for Multipath        February 2020
               Extensions for PCE-Initiated LSP Setup in a Stateful PCE
               Model", RFC 8281, DOI 10.17487/RFC8281, December 2017,
               <https://www.rfc-editor.org/info/rfc8281>.
-
-
-
-
-Koldychev, et al.        Expires August 9, 2020                 [Page 9]
-
-Internet-Draft        PCEP Extensions for Multipath        February 2020
-
 
 10.2.  Informative References
 
@@ -539,6 +607,17 @@ Authors' Addresses
    Email: vbeeram@juniper.net
 
 
+
+
+
+
+
+
+Koldychev, et al.        Expires August 12, 2020               [Page 11]
+
+Internet-Draft        PCEP Extensions for Multipath        February 2020
+
+
    Hooman Bidgoli
    Nokia
 
@@ -557,4 +636,37 @@ Authors' Addresses
 
 
 
-Koldychev, et al.        Expires August 9, 2020                [Page 10]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Koldychev, et al.        Expires August 12, 2020               [Page 12]
