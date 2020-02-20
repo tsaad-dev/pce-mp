@@ -508,7 +508,7 @@ Internet-Draft        PCEP Extensions for Multipath        February 2020
 
 7.1.  SR Policy Candidate-Path with Multiple Segment-Lists
 
-   Consider how following sample SR Policy, taken from
+   Consider how the following sample SR Policy, taken from
    [I-D.ietf-spring-segment-routing-policy], would be represented in a
    PCRpt message.
 
@@ -525,7 +525,7 @@ Internet-Draft        PCEP Extensions for Multipath        February 2020
                    Weight W4, SID-List4 <SID41...SID4j>
 
    As specified in [I-D.barth-pce-segment-routing-policy-cp], CP1 and
-   CP2 are signaled as separate state-report elements and each have a
+   CP2 are signaled as separate state-report elements and each has a
    unique PLSP-ID, assigned by the PCC.  Let us assign PLSP-ID 100 to
    CP1 and PLSP-ID 200 to CP2.
 
