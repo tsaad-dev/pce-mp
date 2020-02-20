@@ -5,14 +5,14 @@
 Network Working Group                                       M. Koldychev
 Internet-Draft                                              S. Sivabalan
 Intended status: Standards Track                     Cisco Systems, Inc.
-Expires: August 13, 2020                                         T. Saad
+Expires: August 23, 2020                                         T. Saad
                                                                V. Beeram
                                                   Juniper Networks, Inc.
                                                               H. Bidgoli
                                                                    Nokia
                                                                 B. Yadav
                                                                    Ciena
-                                                       February 10, 2020
+                                                       February 20, 2020
 
 
           PCEP Extensions for Signaling Multipath Information
@@ -46,14 +46,14 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on August 13, 2020.
+   This Internet-Draft will expire on August 23, 2020.
 
 
 
 
 
 
-Koldychev, et al.        Expires August 13, 2020                [Page 1]
+Koldychev, et al.        Expires August 23, 2020                [Page 1]
 
 Internet-Draft        PCEP Extensions for Multipath        February 2020
 
@@ -75,7 +75,7 @@ Copyright Notice
 
 Table of Contents
 
-   1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   2
+   1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   3
    2.  Terminology . . . . . . . . . . . . . . . . . . . . . . . . .   3
      2.1.  Terms and Abbreviations . . . . . . . . . . . . . . . . .   3
    3.  Motivation  . . . . . . . . . . . . . . . . . . . . . . . . .   4
@@ -91,13 +91,28 @@ Table of Contents
      5.1.  Signaling Multiple Paths for Loadbalancing  . . . . . . .   8
      5.2.  Signaling Multiple Paths for Protection . . . . . . . . .   9
    6.  PCEP Message Extensions . . . . . . . . . . . . . . . . . . .   9
-   7.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   9
-   8.  Security Considerations . . . . . . . . . . . . . . . . . . .  10
-   9.  Acknowledgement . . . . . . . . . . . . . . . . . . . . . . .  10
-   10. References  . . . . . . . . . . . . . . . . . . . . . . . . .  10
-     10.1.  Normative References . . . . . . . . . . . . . . . . . .  10
-     10.2.  Informative References . . . . . . . . . . . . . . . . .  11
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  11
+   7.  Examples  . . . . . . . . . . . . . . . . . . . . . . . . . .   9
+     7.1.  SR Policy Candidate-Path with Multiple Segment-Lists  . .  10
+   8.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  11
+   9.  Security Considerations . . . . . . . . . . . . . . . . . . .  11
+   10. Acknowledgement . . . . . . . . . . . . . . . . . . . . . . .  11
+   11. Contributors  . . . . . . . . . . . . . . . . . . . . . . . .  11
+   12. References  . . . . . . . . . . . . . . . . . . . . . . . . .  11
+     12.1.  Normative References . . . . . . . . . . . . . . . . . .  11
+     12.2.  Informative References . . . . . . . . . . . . . . . . .  12
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  13
+
+
+
+
+
+
+
+
+Koldychev, et al.        Expires August 23, 2020                [Page 2]
+
+Internet-Draft        PCEP Extensions for Multipath        February 2020
+
 
 1.  Introduction
 
@@ -105,14 +120,6 @@ Table of Contents
    [RFC5440] enables the communication between a Path Computation Client
    (PCC) and a Path Control Element (PCE), or between two PCEs based on
    the PCE architecture [RFC4655].
-
-
-
-
-Koldychev, et al.        Expires August 13, 2020                [Page 2]
-
-Internet-Draft        PCEP Extensions for Multipath        February 2020
-
 
    PCEP Extensions for the Stateful PCE Model [RFC8231] describes a set
    of extensions to PCEP that enable active control of Multiprotocol
@@ -155,20 +162,16 @@ Internet-Draft        PCEP Extensions for Multipath        February 2020
 
    PCEP Tunnel:
 
-      The object identified by the PLSP-ID, see
-      [I-D.koldychev-pce-operational] for more details.
 
 
 
-
-
-
-
-
-Koldychev, et al.        Expires August 13, 2020                [Page 3]
+Koldychev, et al.        Expires August 23, 2020                [Page 3]
 
 Internet-Draft        PCEP Extensions for Multipath        February 2020
 
+
+      The object identified by the PLSP-ID, see
+      [I-D.koldychev-pce-operational] for more details.
 
 3.  Motivation
 
@@ -214,17 +217,17 @@ Internet-Draft        PCEP Extensions for Multipath        February 2020
    We define the MULTIPATH-CAP TLV that MAY be present in the OPEN
    object and/or the LSP object.  The purpose of this TLV is two-fold:
 
-   1.  From PCC: it tells how many multipaths the PCC can install in
-       forwarding.
 
 
 
 
-
-Koldychev, et al.        Expires August 13, 2020                [Page 4]
+Koldychev, et al.        Expires August 23, 2020                [Page 4]
 
 Internet-Draft        PCEP Extensions for Multipath        February 2020
 
+
+   1.  From PCC: it tells how many multipaths the PCC can install in
+       forwarding.
 
    2.  From PCE: it tells that the PCE supports this standard and how
        many multipaths the PCE can compute.
@@ -274,10 +277,7 @@ Internet-Draft        PCEP Extensions for Multipath        February 2020
 
 
 
-
-
-
-Koldychev, et al.        Expires August 13, 2020                [Page 5]
+Koldychev, et al.        Expires August 23, 2020                [Page 5]
 
 Internet-Draft        PCEP Extensions for Multipath        February 2020
 
@@ -333,7 +333,7 @@ Internet-Draft        PCEP Extensions for Multipath        February 2020
 
 
 
-Koldychev, et al.        Expires August 13, 2020                [Page 6]
+Koldychev, et al.        Expires August 23, 2020                [Page 6]
 
 Internet-Draft        PCEP Extensions for Multipath        February 2020
 
@@ -389,7 +389,7 @@ Internet-Draft        PCEP Extensions for Multipath        February 2020
 
 
 
-Koldychev, et al.        Expires August 13, 2020                [Page 7]
+Koldychev, et al.        Expires August 23, 2020                [Page 7]
 
 Internet-Draft        PCEP Extensions for Multipath        February 2020
 
@@ -445,7 +445,7 @@ Internet-Draft        PCEP Extensions for Multipath        February 2020
 
 
 
-Koldychev, et al.        Expires August 13, 2020                [Page 8]
+Koldychev, et al.        Expires August 23, 2020                [Page 8]
 
 Internet-Draft        PCEP Extensions for Multipath        February 2020
 
@@ -493,18 +493,84 @@ Internet-Draft        PCEP Extensions for Multipath        February 2020
       <actual-path> ::= [<PATH-ATTRIB>](<RRO>|<SRRO>)
                  [<actual-path>]
 
-7.  IANA Considerations
-
-   IANA is requested to make the assignment of a new value for the
-   existing "PCEP TLV Type Indicators" registry as follows:
+7.  Examples
 
 
 
 
-Koldychev, et al.        Expires August 13, 2020                [Page 9]
+
+
+
+Koldychev, et al.        Expires August 23, 2020                [Page 9]
 
 Internet-Draft        PCEP Extensions for Multipath        February 2020
 
+
+7.1.  SR Policy Candidate-Path with Multiple Segment-Lists
+
+   Consider how following sample SR Policy, taken from
+   [I-D.ietf-spring-segment-routing-policy], would be represented in a
+   PCRpt message.
+
+           SR policy POL1 <headend, color, endpoint>
+               Candidate-path CP1 <protocol-origin = 20, originator =
+       100:1.1.1.1, discriminator = 1>
+                   Preference 200
+                   Weight W1, SID-List1 <SID11...SID1i>
+                   Weight W2, SID-List2 <SID21...SID2j>
+               Candidate-path CP2 <protocol-origin = 20, originator =
+       100:2.2.2.2, discriminator = 2>
+                   Preference 100
+                   Weight W3, SID-List3 <SID31...SID3i>
+                   Weight W4, SID-List4 <SID41...SID4j>
+
+   As specified in [I-D.barth-pce-segment-routing-policy-cp], CP1 and
+   CP2 are signaled as separate state-report elements and each have a
+   unique PLSP-ID, assigned by the PCC.  Let us assign PLSP-ID 100 to
+   CP1 and PLSP-ID 200 to CP2.
+
+   The state-report for CP1 can be encoded as:
+
+   <state-report> =  <LSP PLSP_ID=100>
+                     <ASSOCIATION>
+                     <END-POINT>
+                     <PATH-ATTRIB PATH_ID=1 Weight_TLV=W1>
+                     <ERO SID-List1>
+                     <PATH-ATTRIB PATH_ID=2 Weight_TLV=W2>
+                     <ERO SID-List2>
+
+   The state-report for CP2 can be encoded as:
+
+   <state-report> =  <LSP PLSP_ID=200>
+                     <ASSOCIATION>
+                     <END-POINT>
+                     <PATH-ATTRIB PATH_ID=1 Weight_TLV=W3>
+                     <ERO SID-List3>
+                     <PATH-ATTRIB PATH_ID=2 Weight_TLV=W4>
+                     <ERO SID-List4>
+
+   The above sample state-report elements only specify the minimum
+   mandatory objects, of course other objects like SRP, LSPA, METRIC,
+   etc., are allowed to be inserted.
+
+   Note that the syntax
+
+
+
+Koldychev, et al.        Expires August 23, 2020               [Page 10]
+
+Internet-Draft        PCEP Extensions for Multipath        February 2020
+
+
+   <PATH-ATTRIB PATH_ID=1 Weight_TLV=W1>
+
+   , simply means that this is PATH-ATTRIB object with PATH_ID field set
+   to "1" and with a Weight TLV carrying weight of "W1".
+
+8.  IANA Considerations
+
+   IANA is requested to make the assignment of a new value for the
+   existing "PCEP TLV Type Indicators" registry as follows:
 
     +------------+-----------------------------------+-----------------+
     | TLV Type   | TLV Name                          | Reference       |
@@ -517,23 +583,40 @@ Internet-Draft        PCEP Extensions for Multipath        February 2020
     | TBD3       | MULTIPATH-BACKUP                  | This document   |
     +------------+-----------------------------------+-----------------+
 
-8.  Security Considerations
+9.  Security Considerations
 
    None at this time.
 
-9.  Acknowledgement
+10.  Acknowledgement
 
    Thanks to Dhruv Dhody for ideas and discussion.
 
-10.  References
+11.  Contributors
 
-10.1.  Normative References
+      Andrew Stone
+      Nokia
+
+      Email: andrew.stone@nokia.com
+
+12.  References
+
+12.1.  Normative References
 
    [I-D.barth-pce-segment-routing-policy-cp]
               Koldychev, M., Sivabalan, S., Barth, C., Li, C., and H.
               Bidgoli, "PCEP extension to support Segment Routing Policy
               Candidate Paths", draft-barth-pce-segment-routing-policy-
               cp-04 (work in progress), October 2019.
+
+
+
+
+
+
+Koldychev, et al.        Expires August 23, 2020               [Page 11]
+
+Internet-Draft        PCEP Extensions for Multipath        February 2020
+
 
    [I-D.ietf-pce-segment-routing]
               Sivabalan, S., Filsfils, C., Tantsura, J., Henderickx, W.,
@@ -552,15 +635,6 @@ Internet-Draft        PCEP Extensions for Multipath        February 2020
               H. Kotni, "PCEP Operational Clarification", draft-
               koldychev-pce-operational-00 (work in progress), July
               2019.
-
-
-
-
-
-Koldychev, et al.        Expires August 13, 2020               [Page 10]
-
-Internet-Draft        PCEP Extensions for Multipath        February 2020
-
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
@@ -584,12 +658,21 @@ Internet-Draft        PCEP Extensions for Multipath        February 2020
               Model", RFC 8281, DOI 10.17487/RFC8281, December 2017,
               <https://www.rfc-editor.org/info/rfc8281>.
 
-10.2.  Informative References
+12.2.  Informative References
 
    [RFC4655]  Farrel, A., Vasseur, J., and J. Ash, "A Path Computation
               Element (PCE)-Based Architecture", RFC 4655,
               DOI 10.17487/RFC4655, August 2006,
               <https://www.rfc-editor.org/info/rfc4655>.
+
+
+
+
+
+Koldychev, et al.        Expires August 23, 2020               [Page 12]
+
+Internet-Draft        PCEP Extensions for Multipath        February 2020
+
 
 Authors' Addresses
 
@@ -609,13 +692,6 @@ Authors' Addresses
    Juniper Networks, Inc.
 
    Email: tsaad@juniper.net
-
-
-
-
-Koldychev, et al.        Expires August 13, 2020               [Page 11]
-
-Internet-Draft        PCEP Extensions for Multipath        February 2020
 
 
    Vishnu Pavan Beeram
@@ -649,24 +725,4 @@ Internet-Draft        PCEP Extensions for Multipath        February 2020
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Koldychev, et al.        Expires August 13, 2020               [Page 12]
+Koldychev, et al.        Expires August 23, 2020               [Page 13]

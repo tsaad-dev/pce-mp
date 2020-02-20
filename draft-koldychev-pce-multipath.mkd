@@ -387,6 +387,72 @@ In this standard, we extend these two elements:
 ~~~
 
 
+#  Examples
+
+## SR Policy Candidate-Path with Multiple Segment-Lists
+
+Consider how the following sample SR Policy, taken from  
+{{!I-D.ietf-spring-segment-routing-policy}}, would be
+represented in a PCRpt message.
+
+~~~
+        SR policy POL1 <headend, color, endpoint>
+            Candidate-path CP1 <protocol-origin = 20, originator =
+    100:1.1.1.1, discriminator = 1>
+                Preference 200
+                Weight W1, SID-List1 <SID11...SID1i>
+                Weight W2, SID-List2 <SID21...SID2j>
+            Candidate-path CP2 <protocol-origin = 20, originator =
+    100:2.2.2.2, discriminator = 2>
+                Preference 100
+                Weight W3, SID-List3 <SID31...SID3i>
+                Weight W4, SID-List4 <SID41...SID4j>
+~~~
+
+As specified in {{!I-D.barth-pce-segment-routing-policy-cp}}, CP1 and CP2 
+are signaled as separate state-report elements and each has 
+a unique PLSP-ID, assigned by the PCC. 
+Let us assign PLSP-ID 100 to CP1 and PLSP-ID 200 to CP2. 
+
+The state-report for CP1 can be encoded as:
+
+~~~
+<state-report> =  <LSP PLSP_ID=100>
+                  <ASSOCIATION>
+                  <END-POINT>
+                  <PATH-ATTRIB PATH_ID=1 Weight_TLV=W1>
+                  <ERO SID-List1>
+                  <PATH-ATTRIB PATH_ID=2 Weight_TLV=W2>
+                  <ERO SID-List2>
+~~~
+
+The state-report for CP2 can be encoded as:
+
+~~~
+<state-report> =  <LSP PLSP_ID=200>
+                  <ASSOCIATION>
+                  <END-POINT>
+                  <PATH-ATTRIB PATH_ID=1 Weight_TLV=W3>
+                  <ERO SID-List3>
+                  <PATH-ATTRIB PATH_ID=2 Weight_TLV=W4>
+                  <ERO SID-List4>
+~~~
+
+The above sample state-report elements only 
+specify the minimum mandatory objects, 
+of course other objects like SRP, LSPA, METRIC, etc., are allowed to be 
+inserted.
+
+Note that the syntax
+
+~~~
+<PATH-ATTRIB PATH_ID=1 Weight_TLV=W1>
+~~~
+
+, simply means that this is PATH-ATTRIB object 
+with PATH_ID field set to "1" and 
+with a Weight TLV carrying weight of "W1".
+
 
 #  IANA Considerations
 
@@ -414,3 +480,11 @@ In this standard, we extend these two elements:
 
    Thanks to Dhruv Dhody for ideas and discussion.
 
+#  Contributors
+
+~~~
+   Andrew Stone
+   Nokia
+
+   Email: andrew.stone@nokia.com
+~~~
